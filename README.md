@@ -30,4 +30,4 @@ The ESP-01 / ESP-01S from AI Thinker is used to control one MCP23017 16bit IO ex
 The controller must be placed after a 10A circuit breaker so total power should not exceed 2300W in Europe. Please conform to your local regulations!
 If all channels are used equally, this corresponds to about 137W per channel, enough for 9 x 15W LED bulbs per each channel or a total of 144 15W LED bulbs.
 The controller should cover most houses and apartments without problems, leaving a few extra channels for blinds, irrigation or other controls.
-The number of independent 16 channels control boards you can use is in theory unlimited but practically the limiting factor will be your electrical installation space and WiFi available DHCP IP addresses.
+The number of independent 16 channels control boards you can use is in theory unlimited but practically the limiting factor will be your electrical installation space and available DHCP IP addresses on WiFi.
