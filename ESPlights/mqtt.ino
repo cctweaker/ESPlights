@@ -49,17 +49,15 @@ void mqtt_connect()
 
 void messageReceived(String &topic, String &payload)
 {
-    if (topic == MQTT_SAVE_TOPIC)
+    if (!pin_states)
     {
         client.unsubscribe(MQTT_SAVE_TOPIC);
         client.subscribe(MQTT_CMND_TOPIC, 0);
-        if (!pin_states)
-        {
-            pin_states = true;
-            pins = payload.toInt();
-            update_MCP();
-            return;
-        }
+        pin_states = true;
+
+        pins = payload.toInt();
+        update_MCP();
+        return;
     }
 
     StaticJsonDocument<256> doc;
