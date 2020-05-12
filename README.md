@@ -3,6 +3,7 @@
 MQTT controlling software for the beta version of 16 channel lights controller provided by https://3dstar.ro
 
 # Features
+
 - secure MQTT connection, Let's Ecrypt CA cetificate already loaded
 - topic structure for building control: location/device/+
 - easy integration with Home Assistant (not yet automatic)
@@ -14,5 +15,6 @@ MQTT controlling software for the beta version of 16 channel lights controller p
 - no web access, just pure MQTT
 
 # To do
+
 - automatic Home Assistant integration
 - configure topic, configure new devices by phone/app
