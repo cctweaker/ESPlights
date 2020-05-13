@@ -32,6 +32,6 @@ char HOSTNAME[32];
 // periodic reports
 ///////////////////////////////////////////////////////////////////////
 bool heartbeat = true;
-#define heartbeat_period 1 * 60 * 1000 // 60 * 1000 = 1 minute
+#define heartbeat_period 30 * 60 * 1000 // 60 * 1000 = 1 minute
 unsigned long last_heartbeat = 0;
 ///////////////////////////////////////////////////////////////////////

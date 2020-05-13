@@ -9,7 +9,7 @@
 const char PREFIX[] = LOC "/" TIP "_";
 const char WILL[] = "/will";
 const char CHAN[] = "/chan";
-const char CMND[] = "/cmnd";
+const char CMND[] = "/cmnd/+";
 const char STAT[] = "/stat";
 const char SAVE[] = "/save";
 char MQTT_WILL_TOPIC[64];

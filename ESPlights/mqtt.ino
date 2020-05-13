@@ -60,14 +60,10 @@ void messageReceived(String &topic, String &payload)
         return;
     }
 
-    StaticJsonDocument<256> doc;
-    deserializeJson(doc, payload);
-    yield();
-
-    uint8_t pin = doc["channel"];
-    uint8_t value = doc["state"];
-
-    doc.clear();
+    uint8_t idx = topic.lastIndexOf('/') + 1;
+    String channel = topic.substring(idx);
+    uint8_t pin = channel.toInt();
+    uint8_t value = payload.toInt();
 
     update_pins(pin, value);
 }
@@ -97,7 +93,7 @@ void send_heartbeat()
 
     sprintf(tx, "{\"Type\":\"%s\",\"ID\":\"%x\",\"Vin\":%.2f,\"SSID\":\"%s\",\"RSSI\":%d,\"BSSID\":\"%s\"}", TIP, ESP.getChipId(), supply, WiFi.SSID().c_str(), WiFi.RSSI(), WiFi.BSSIDstr().c_str());
 
-    client.publish(MQTT_STAT_TOPIC, tx, false, 0);
+    client.publish(MQTT_STAT_TOPIC, tx, true, 0);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////

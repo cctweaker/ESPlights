@@ -4,7 +4,7 @@ ADC_MODE(ADC_VCC);
 #include <MQTTClient.h>
 #include <time.h>
 #include <Wire.h>
-#include <ArduinoJson.h>
+// #include <ArduinoJson.h>
 
 ///////////////////////////////////////////////////////////////////////
 

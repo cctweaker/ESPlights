@@ -31,3 +31,15 @@ The controller must be placed after a 10A circuit breaker so total power should 
 If all channels are used equally, this corresponds to about 137W per channel, enough for 9 x 15W LED bulbs per each channel or a total of 144 15W LED bulbs.
 The controller should cover most houses and apartments without problems, leaving a few extra channels for blinds, irrigation or other controls.
 The number of independent 16 channels control boards you can use is in theory unlimited but practically the limiting factor will be your electrical installation space and available DHCP IP addresses on WiFi.
+
+# Usage
+- download
+- rename example_private.h to private.h
+- edit private.h
+- build & upload (PlatformIO recommended for automatic library management)
+
+- command topic: "location"/lights_abcdef/cmnd/x where abcdef is ESP chip id (last 3 mac address bytes) and x is the channel number to be controlled. Send 1 for ON, 0 for OFF or 2 for TOGGLE. Don't send retained messages here.
+- channels status topic: "location"/lights_abcdef/chanx it will be 0 for OFF and 1 for ON. Updated by the ESP after processing command received, statuses are retained.
+- status topic: "location"/lights_abcdef/stat where the ESP sends periodic updates with type, ID, supply voltage, SSID, RSSI, BSSID (AP mac)
+- will topic: "location"/lights_abcdef/will it will be 1 when device is ON and 0 when powered OFF
+- save topic: "location"/lights_abcdef/save where the device will save a retained message with its last state for all channels. At startup it will load channel statuses from here.
