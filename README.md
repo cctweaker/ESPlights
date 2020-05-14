@@ -41,5 +41,6 @@ The number of independent 16 channels control boards you can use is in theory un
 - command topic: "location"/lights_abcdef/cmnd/x where abcdef is ESP chip id (last 3 mac address bytes) and x is the channel number to be controlled. Send 1 for ON, 0 for OFF or 2 for TOGGLE. Don't send retained messages here.
 - channels status topic: "location"/lights_abcdef/chanx it will be 0 for OFF and 1 for ON. Updated by the ESP after processing command received, statuses are retained.
 - status topic: "location"/lights_abcdef/stat where the ESP sends periodic updates with type, ID, supply voltage, SSID, RSSI, BSSID (AP mac)
+<code>{"Type":"lights","ID":"abcdef","Vin":3.31,"SSID":"WIFI","RSSI":-29,"BSSID":"D8:50:E6:XX:XX:XX"}</code>
 - will topic: "location"/lights_abcdef/will it will be 1 when device is ON and 0 when powered OFF
 - save topic: "location"/lights_abcdef/save where the device will save a retained message with its last state for all channels. At startup it will load channel statuses from here.
