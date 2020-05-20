@@ -44,3 +44,7 @@ The number of independent 16 channels control boards you can use is in theory un
 <code>{"Type":"lights","ID":"abcdef","Vin":3.31,"SSID":"WIFI","RSSI":-29,"BSSID":"D8:50:E6:XX:XX:XX"}</code>
 - will topic: "location"/lights_abcdef/will it will be 1 when device is ON and 0 when powered OFF
 - save topic: "location"/lights_abcdef/save where the device will save a retained message with its last state for all channels. At startup it will load channel statuses from here.
+
+# PCB example
+<img src="https://github.com/cctweaker/esplights/blob/master/Hardware/ESPlights v1.0 top example.jpg?raw=true">
+<img src="https://github.com/cctweaker/esplights/blob/master/Hardware/ESPlights v1.0 bottom example.jpg?raw=true">
