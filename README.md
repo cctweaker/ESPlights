@@ -23,7 +23,7 @@ MQTT controlling software for the beta version of the 16 channel lights controll
 
 # Hardware
 
-Soon to be available from https://3dstar.ro in PCB, kit (PCB + components) or fully assembled form.
+Soon to be available from <a href="https://3dstar.ro/proiecte/esplights">3DStar shop</a> in PCB, kit (PCB + components) or fully assembled form.
 
 The ESP-01 / ESP-01S from AI Thinker is used to control one MCP23017 16bit IO expander. On each channel there are 1 optotriac and 1 triac to control mains powered lights. Each channel can switch up to around 600W without any special cooling but total power draw should be considered.
 
