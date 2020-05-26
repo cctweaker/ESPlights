@@ -43,8 +43,8 @@ The number of boards you can use is unlimited so you can controll all your mains
     - <code>update</code>: perform OTA update
     - <code>reset</code>: restart ESP device
     - <code>format</code>: format LittleFS space
-    - <code>list</code>: list current LittleFS config.json to Serial @ 115200bps. Other than this serial is not used at all.
-    - <code>config: change device configuration. Due to MQTT message length restrictions do not send json messages longer than 256 bytes. Get examples from config.json in data folde. You can send any part at any time. Remember to send save command after you are satisfied with the configuration.
+    - <code>list</code>: list current LittleFS stored config.json to Serial @ 115200bps. Other than this serial is not used at all.
+    - <code>config</code>: change device configuration. Due to MQTT message length restrictions do not send json messages longer than 256 bytes. Get examples from config.json in data folde. You can send any part at any time. Remember to send save command after you are satisfied with the configuration.
 
     - <code>/sX</code>: shutter control. X is the shutter number. Payload can be 0 = stop, 1 = UP, 2 = down. Repeating UP/DOWN also stops the shutters.
     - <code>/dX</code>: door control. X is the door number. Payload can be 0 = off, 1 = on, 2 = toggle
