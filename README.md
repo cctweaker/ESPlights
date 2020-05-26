@@ -37,14 +37,14 @@ The number of boards you can use is unlimited so you can controll all your mains
 - in both cases PlatformIO is recommended for automatic library management
 
 # Usage
-- mqtt topic: <code>LOC/TIP_ESPid</code> where LOC & TIP are user defined and ESPid is the HEX representation of your ESP mac address' last 3 bytes
+- mqtt topic: <code>LOC/TIP_ESPid</code> where LOC & TIP are user defined and ESPid is the HEX representation of your ESP mac address' last 3 bytes. What follow are possible suffixes and must be added after the mqtt topic.
 - command topic: <code>/cmnd/...</code>
     - <code>save</code>: save current configuration to LittleFS
     - <code>update</code>: perform OTA update
     - <code>reset</code>: restart ESP device
     - <code>format</code>: format LittleFS space
     - <code>list</code>: list current LittleFS stored config.json to Serial @ 115200bps. Other than this serial is not used at all.
-    - <code>config</code>: change device configuration. Due to MQTT message length restrictions do not send json messages longer than 256 bytes. Get examples from config.json in data folde. You can send any part at any time. Remember to send save command after you are satisfied with the configuration.
+    - <code>config</code>: change device configuration. Due to MQTT message length restrictions do not send json messages longer than 256 bytes. Get examples from config.json in data folder. You can send any part at any time. Remember to send save command after you are satisfied with the configuration.
 
     - <code>/sX</code>: shutter control. X is the shutter number. Payload can be 0 = stop, 1 = UP, 2 = down. Repeating UP/DOWN also stops the shutters.
     - <code>/dX</code>: door control. X is the door number. Payload can be 0 = off, 1 = on, 2 = toggle
@@ -53,7 +53,7 @@ The number of boards you can use is unlimited so you can controll all your mains
     - <code>/nX</code>: simple/normal control. X is the number. Payload can be 0 = off, 1 = on, 2 = toggle
 
 - channel status topic: <code>/chan/X</code> where X is the channel number. Payload will be 0 for OFF and 1 for ON. It is updated by the ESP after processing commands, statuses are sent with retain flag.
-- shutter status topic: <code>/shut/X</code> where X is the shutter number. It holds the current shutter positions. Payload will be 0 of unknown, 1 for UP, 2 for DOWN.
+- shutter status topic: <code>/shut/X</code> where X is the shutter number. It holds the current shutter positions. Payload will be 0 for unknown, 1 for UP, 2 for DOWN.
 - status topic: <code>/stat</code> where the ESP sends periodic updates (heartbeat) with type, ID, supply voltage, SSID, RSSI, BSSID (AP mac) Example: <code>{"Type":"lights","ID":"abcdef","Vin":3.31,"SSID":"WIFI","RSSI":-29,"BSSID":"D8:50:E6:XX:XX:XX"}</code>
 - will topic: <code>/will</code> Payload is 1 when device is ON and 0 when powered OFF
 - save topic: <code>/save</code> where the device will save a retained message with its last state for lights. At startup it will load lights statuses from here and start the lights accordingly.
