@@ -1,0 +1,78 @@
+{
+    "TIP": "lights",
+    "LOC": "location",
+    "ssid": "WiFi",
+    "pass": "passw0rd",
+    "ssidb": "BackupWIFI",
+    "passb": "passw0rd",
+    "MQTT_HOST": "www.mqtt.server",
+    "MQTT_PORT": 8883,
+    "MQTT_USER": "mqtt_user",
+    "MQTT_PASS": "mqtt_passw0rd",
+    "update_url": "https://esp.3dstar.ro/",
+    "FACTOR": 1024.0,
+    "heartbeat": true,
+    "heartbeat_minutes": 10,
+    "chn_to_mcp": [
+        16,
+        15,
+        14,
+        13,
+        12,
+        11,
+        10,
+        9,
+        8,
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1,
+        0
+    ],
+    "shutters": 2,
+    "shutter_chn_up": [
+        11,
+        13
+    ],
+    "shutter_chn_down": [
+        12,
+        14
+    ],
+    "shutter_timing": [
+        30,
+        30
+    ],
+    "doors": 1,
+    "door_chn": [
+        15
+    ],
+    "door_timing": [
+        10
+    ],
+    "gates": 1,
+    "gate_chn": [
+        16
+    ],
+    "gate_timing": [
+        400
+    ],
+    "lights": 8,
+    "light_chn": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+    ],
+    "simple": 2,
+    "simple_chn": [
+        9,
+        10
+    ]
+}

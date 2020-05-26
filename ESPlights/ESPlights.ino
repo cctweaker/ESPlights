@@ -4,11 +4,16 @@ ADC_MODE(ADC_VCC);
 #include <MQTTClient.h>
 #include <time.h>
 #include <Wire.h>
-// #include <ArduinoJson.h>
+#include <ArduinoJson.h>
+#include <FS.h>
+#include <LittleFS.h>
+#include <ESP8266httpUpdate.h>
 
 ///////////////////////////////////////////////////////////////////////
 
-#include "private.h"
+// #include "private.h"
+// #include "sm.h"
+#include "config.h"
 #include "mqtt.h"
 #include "variables.h"
 
@@ -22,6 +27,8 @@ time_t now;
 
 void setup()
 {
+  load_config();     // load configuration from SPIFFS
+  init_others();     // other stuff to initialize
   Wire.begin(2, 0);  // connect SDA to GPIO2 and SCL to GPIO0
   setup_MCP();       // set MCP registers
   init_mac_topics(); // get mac and make topics for mqtt
@@ -40,16 +47,43 @@ void loop()
 
   client.loop(); // loop MQTT client
 
+  /////////////////////////
+
+  if (do_init_lights) // got saved lights from mqtt server
+    init_lights();
+
+  if (do_ota_update) // if got command to do OTA update
+    ota_update();
+
+  if (do_save_config) // if got command to save config
+    save_config();
+
+  if (do_fs_format) // if got command to format FS
+    format_fs();
+
+  if (do_list_config) // list config file to serial
+    list_config();
+
+  /////////////////////////
+
+  check_timers(); // check timer expiration
+
+  /////////////////////////
+
+  if (!pin_states_known) // initialize save topic for a new device
+    client.publish(MQTT_SAVE_TOPIC, "0", true, 0);
+
+  /////////////////////////
+
   if (heartbeat)
     if ((unsigned long)(millis() - last_heartbeat) > heartbeat_period)
     {
       last_heartbeat = millis();
       send_heartbeat();
-      if (!pin_states) // initialize save topic for a new device
-        client.publish(MQTT_SAVE_TOPIC, "0", true, 0);
     }
 
-  delay(50);
+  delay(10);
 }
 
 ///////////////////////////////////////////////////////////////////////
+
