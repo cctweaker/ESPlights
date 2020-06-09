@@ -38,7 +38,14 @@ void mqtt_connect()
             ESP.restart();
     }
 
-    client.subscribe(MQTT_SAVE_TOPIC, 0);
+    if (pin_states_known)
+    {
+        client.subscribe(MQTT_CMND_TOPIC, 0);
+    }
+    else
+    {
+        client.subscribe(MQTT_SAVE_TOPIC, 0);
+    }
     client.publish(MQTT_WILL_TOPIC, "1", true, 0);
 }
 
@@ -50,11 +57,9 @@ void messageReceived(String &topic, String &payload)
 {
     if (!pin_states_known)
     {
-        client.unsubscribe(MQTT_SAVE_TOPIC);
-        client.subscribe(MQTT_CMND_TOPIC, 0);
         pin_states_known = true;
-        do_init_lights = true;
         light_status = payload.toInt();
+        do_init_lights = true;
         return;
     }
 
@@ -285,7 +290,7 @@ void send_heartbeat()
     char tx[256];
     float supply = (float)ESP.getVcc() / FACTOR;
 
-    sprintf(tx, "{\"Type\":\"%s\",\"ID\":\"%x\",\"Vin\":%.2f,\"SSID\":\"%s\",\"RSSI\":%d,\"BSSID\":\"%s\"}", TIP, ESP.getChipId(), supply, WiFi.SSID().c_str(), WiFi.RSSI(), WiFi.BSSIDstr().c_str());
+    sprintf(tx, "{\"Type\":\"%s\",\"v\":%d,\"ID\":\"%x\",\"Vin\":%.2f,\"SSID\":\"%s\",\"RSSI\":%d,\"BSSID\":\"%s\"}", TIP, VERSION, ESP.getChipId(), supply, WiFi.SSID().c_str(), WiFi.RSSI(), WiFi.BSSIDstr().c_str());
 
     client.publish(MQTT_STAT_TOPIC, tx, true, 0);
 }

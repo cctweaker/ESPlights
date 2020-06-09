@@ -1,7 +1,5 @@
 private.h
 sm.h
-info.txt
-mqtt_dash.json
 .cache/
 .pio/
 .pioenvs/

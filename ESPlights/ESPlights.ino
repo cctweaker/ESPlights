@@ -44,6 +44,7 @@ void loop()
 {
   if (!client.connected())
     mqtt_connect();
+    
 
   client.loop(); // loop MQTT client
 

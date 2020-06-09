@@ -2,7 +2,7 @@
 
 The module can be configured in two ways:
 
-- by editing config.h with default values then normal upload and issue save command by mqtt to save the settings on the ESP. After this save action you can perform OTA updates as the settings are saved on the ESP. The module will work fine with the settings provided in config.h On OTA update settings will not be saved.
+- by editing config.h with default values then normal upload and issue save command by mqtt to save the settings on the ESP. After this save action you can perform OTA updates as the settings are saved on the ESP. The module will work fine with the settings provided in config.h but on OTA update settings will not be saved.
 
 - by editing config.json in data folder and uploading the file system image on the ESP.
 

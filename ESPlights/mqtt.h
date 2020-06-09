@@ -20,10 +20,11 @@ char MQTT_SAVE_TOPIC[64];
 char MQTT_SHUT_TOPIC[64];
 // used topics are:
 // LOC/TIP_ESPid/will - will topic, contains 1 for present, 0 for absent
-// LOC/TIP_ESPid/cmnd - command topic {"chan":1-16, "state":0-2}
-// LOC/TIP_ESPid/chanX - status per channel, 0 off, 1 on
+// LOC/TIP_ESPid/chan/X - status per channel, 0 off, 1 on
+// LOC/TIP_ESPid/cmnd - command topic to listen to
 // LOC/TIP_ESPid/stat - device status, gets periodic updates
 // LOC/TIP_ESPid/save - topic where all channel statuses are saved
+// LOC/TIP_ESPid/shut/X - status per shutter, 0 unknown, 1 open (UP), 2 closed (DOWN)
 ///////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////

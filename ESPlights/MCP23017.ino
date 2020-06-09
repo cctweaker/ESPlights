@@ -89,6 +89,9 @@ void init_lights()
 {
     do_init_lights = false;
 
+    client.unsubscribe(MQTT_SAVE_TOPIC);
+    client.subscribe(MQTT_CMND_TOPIC, 0);
+
     uint8_t value = 0;
 
     for (uint8_t i = 0; i < lights; i++)

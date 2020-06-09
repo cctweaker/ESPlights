@@ -37,7 +37,7 @@ The number of boards you can use is unlimited so you can controll all your mains
 - in both cases PlatformIO is recommended for automatic library management
 
 # Usage
-- mqtt topic: <code>LOC/TIP_ESPid</code> where LOC & TIP are user defined and ESPid is the HEX representation of your ESP mac address' last 3 bytes. What follow are possible suffixes and must be added after the mqtt topic.
+- mqtt topic: <code>LOC/TIP_ESPid</code> where LOC & TIP are user defined and ESPid is the HEX representation of your ESP mac address' last 3 bytes. What follows are possible suffixes and must be added after the mqtt topic.
 - command topic: <code>/cmnd/...</code>
     - <code>save</code>: save current configuration to LittleFS
     - <code>update</code>: perform OTA update
