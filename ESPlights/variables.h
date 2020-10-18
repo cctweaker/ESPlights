@@ -58,7 +58,7 @@ char update_url[128] = "esp.3dstar.ro/";
 
 char LOC[32] = "home";
 char TIP[32] = "lights";
-char NAME[32] = "ground_floor";
+char NAME[32] = "lights_ctrl";
 
 bool heartbeat = false;
 uint8_t heartbeat_minutes = 60;

@@ -48,6 +48,12 @@ void messageReceived(String &topic, String &payload)
         ESP.restart();
     }
 
+    if (cmnd == "update")
+    {
+        do_ota_update = true;
+        return;
+    }
+
     /////////////////
 
     cmnd = topic.substring(idx, idx + 1);
@@ -62,7 +68,7 @@ void messageReceived(String &topic, String &payload)
 
         char topic[128];
 
-        sprintf(topic, "%s/%s/%s/shut/%d", LOC, TIP, NAME, chn + 1);
+        sprintf(topic, "%s/%s/%s/shutter/%d", LOC, TIP, NAME, chn + 1);
         client.publish(topic, "0", true, 0);
 
         if (shutter_status[chn] == 0)
