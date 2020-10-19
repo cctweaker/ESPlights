@@ -408,7 +408,7 @@ void cfg_page_channels()
     server.sendContent(buffer);
     for (i = 0; i < lights; i++)
     {
-        sprintf_P(buffer, form_light_field, i, i, light_chn[i]);
+        sprintf_P(buffer, form_light_field, i + 1, i, light_chn[i]);
         server.sendContent(buffer);
     }
 
@@ -422,7 +422,7 @@ void cfg_page_channels()
     server.sendContent(buffer);
     for (i = 0; i < simple; i++)
     {
-        sprintf_P(buffer, form_simple_field, i, i, simple_chn[i]);
+        sprintf_P(buffer, form_simple_field, i + 1, i, simple_chn[i]);
         server.sendContent(buffer);
     }
 
