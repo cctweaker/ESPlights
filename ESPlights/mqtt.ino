@@ -39,6 +39,7 @@ void messageReceived(String &topic, String &payload)
     {
         pin_states_known = true;
         light_status = payload.toInt();
+        untimed_status = light_status;
         init_lights();
         return;
     }
@@ -100,6 +101,9 @@ void messageReceived(String &topic, String &payload)
         if (chn >= timed)
             return;
 
+        if (bitRead(untimed_status, timed_chn[chn] - 1))
+            return;
+
         if (value == 0)
         {
             timed_timeout[chn] = 0;
@@ -139,9 +143,13 @@ void messageReceived(String &topic, String &payload)
             return;
 
         do_save_lights = true;
+
         if (value > 1)
-            value = !bitRead(light_status, chn);
-        bitWrite(light_status, chn, value);
+            value = !bitRead(light_status, light_chn[chn] - 1);
+
+        bitWrite(light_status, light_chn[chn] - 1, value);
+
+        bitWrite(untimed_status, light_chn[chn] - 1, value);
 
         update_pins(light_chn[chn], value);
     }
@@ -150,6 +158,15 @@ void messageReceived(String &topic, String &payload)
     {
         if (chn >= simple)
             return;
+
+        if (value == 0)
+            if (bitRead(light_status, simple_chn[chn] - 1))
+            {
+                bitWrite(light_status, simple_chn[chn] - 1, value);
+                do_save_lights = true;
+            }
+
+        bitWrite(untimed_status, simple_chn[chn] - 1, value);
 
         update_pins(simple_chn[chn], value);
     }
@@ -170,7 +187,7 @@ void mqtt_heartbeat()
 {
     char topic[128];
     char mqtt_tx[256];
-    
+
     DynamicJsonDocument doc(256);
 
     doc["l"] = LOC;
@@ -187,6 +204,7 @@ void mqtt_heartbeat()
     doc["SSID"] = WiFi.SSID();
     doc["RSSI"] = WiFi.RSSI();
     doc["BSSID"] = WiFi.BSSIDstr();
+    doc["IP"] = WiFi.localIP().toString();
 
     serializeJson(doc, mqtt_tx);
     doc.clear();
@@ -218,7 +236,8 @@ void mqtt_heartbeat()
     serializeJson(doc, mqtt_tx);
     doc.clear();
     sprintf(topic, "%s/%s/%s/%s/2", LOC, TIP, NAME, STAT);
-    client.publish(topic, mqtt_tx, true, 0);}
+    client.publish(topic, mqtt_tx, true, 0);
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////

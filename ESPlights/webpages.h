@@ -8,7 +8,7 @@ const char page_header_start[] PROGMEM = R"=====(
 )=====";
 
 const char page_header_refresh[] PROGMEM = R"=====(
-<meta http-equiv="refresh" content="10"; url="/">
+<meta http-equiv="refresh" content="%d;url=/">
 )=====";
 
 const char page_header_end[] PROGMEM = R"=====(

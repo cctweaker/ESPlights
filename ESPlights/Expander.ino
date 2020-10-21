@@ -78,11 +78,11 @@ void init_lights()
 {
     uint8_t value = 0;
 
-    for (uint8_t i = 0; i < lights; i++)
+    for (uint8_t i = 0; i < 16; i++)
     {
         value = bitRead(light_status, i);
         if (value)
-            update_pins(light_chn[i], value);
+            update_pins(i, value);
     }
 }
 
@@ -121,8 +121,10 @@ void check_timers()
         {
             if ((unsigned long)(millis() - timed_timeout[i]) > timed_timing[i])
             {
-                update_pins(timed_chn[i], 0);
                 timed_timeout[i] = 0;
+
+                if (!bitRead(untimed_status, timed_chn[i] - 1))
+                    update_pins(timed_chn[i], 0);
             }
         }
     }

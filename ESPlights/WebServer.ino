@@ -675,7 +675,11 @@ void page_restart()
         return;
 
     server.sendContent_P(page_header_start);
-    server.sendContent_P(page_header_refresh);
+
+    char buffer[256] = {0};
+    sprintf_P(buffer, page_header_refresh, 10);
+    server.sendContent(buffer);
+
     server.sendContent_P(page_header_end);
     server.sendContent_P(page_content_title);
     server.sendContent_P(page_content_restart);
@@ -704,7 +708,11 @@ void page_format()
         return;
 
     server.sendContent_P(page_header_start);
-    server.sendContent_P(page_header_refresh);
+
+    char buffer[256] = {0};
+    sprintf_P(buffer, page_header_refresh, 3);
+    server.sendContent(buffer);
+
     server.sendContent_P(page_header_end);
     server.sendContent_P(page_content_title);
     server.sendContent_P(page_content_restart);
@@ -756,7 +764,9 @@ void page_update()
         return;
 
     server.sendContent_P(page_header_start);
-    server.sendContent_P(page_header_refresh);
+    char buffer[256] = {0};
+    sprintf_P(buffer, page_header_refresh, 40);
+    server.sendContent(buffer);
     server.sendContent_P(page_header_end);
     server.sendContent_P(page_content_title);
     server.sendContent_P(page_content_update);
@@ -784,7 +794,11 @@ void page_not_found()
     if (!chunked_response(404))
         return;
     server.sendContent_P(page_header_start);
-    server.sendContent_P(page_header_refresh);
+
+    char buffer[256] = {0};
+    sprintf_P(buffer, page_header_refresh, 10);
+    server.sendContent(buffer);
+
     server.sendContent_P(page_header_end);
     server.sendContent_P(page_content_title);
     server.sendContent_P(page_content_not_found);

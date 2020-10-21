@@ -116,6 +116,10 @@ uint8_t light_chn[16] = {1, 2, 3, 4}; // main channel number assigned per lights
 uint8_t simple = 2;              // number of simple channels (no status save, no timeout)
 uint8_t simple_chn[16] = {5, 6}; // main channel number assigned per simple channel number
 
+// channels activated by lights or simple command
+// in case same channel is assigned also as timed, then it won't be affected if already on
+uint16_t untimed_status = 0;
+
 // SHUTTERS
 uint8_t shutters = 2;                        // number of shutters (each one uses 2 channels, max possible are 8)
 uint8_t shutter_status[8] = {0, 0};          // status per shutter
@@ -128,5 +132,5 @@ unsigned long shutter_timeout[8] = {0, 0};   // holds millis when activated, per
 uint8_t timed = 2;                              // number timed channels (max 16, timeout in milliseconds)
 uint8_t timed_chn[16] = {11, 12};               // main channel number assigned per timed channel number
 unsigned long timed_timing[16] = {5000, 10000}; // timeout in milliseconds per timed channel
-unsigned long timed_timeout[16] = {0, 0};       // holds millis value when activated, per tmtmin channel
+unsigned long timed_timeout[16] = {0, 0};       // holds millis value when activated, per timed channel
 ///////////////////////////////////////////////////////////////////////
