@@ -34,6 +34,7 @@ void messageReceived(String &topic, String &payload)
 {
     uint8_t idx = topic.lastIndexOf('/') + 1;
     String cmnd = topic.substring(idx);
+    uint8_t value = payload.toInt();
 
     if (!pin_states_known && cmnd == "saved")
     {
@@ -42,6 +43,26 @@ void messageReceived(String &topic, String &payload)
         untimed_status = light_status;
         init_lights();
         return;
+    }
+
+    if (cmnd == "all")
+    {
+        if (value && shutters == 0 && lights == max_channels) // if payload > 0 and no shutter and all channels are lights then permit all on
+        {
+            light_status = 65535;
+            untimed_status = 65535;
+            do_save_lights = true;
+            for (uint8_t i = 0; i < max_channels; i++)
+                update_pins(light_chn[i], 1);
+        }
+        if (value == 0)
+        {
+            light_status = 0;
+            untimed_status = 0;
+            do_save_lights = true;
+            for (uint8_t i = 0; i < max_channels; i++)
+                update_pins(light_chn[i], 0);
+        }
     }
 
     if (cmnd == "reset")
@@ -60,7 +81,6 @@ void messageReceived(String &topic, String &payload)
     cmnd = topic.substring(idx, idx + 1);
     String chns = topic.substring(idx + 1);
     uint8_t chn = chns.toInt() - 1;
-    uint8_t value = payload.toInt();
 
     if (cmnd == "s") // shutters
     {
@@ -69,7 +89,7 @@ void messageReceived(String &topic, String &payload)
 
         char topic[128];
 
-        sprintf(topic, "%s/%s/%s/shutter/%d", LOC, TIP, NAME, chn + 1);
+        sprintf(topic, "%s%s%s%s/shutter/%d", LOC, TIP, NAME, XTRA, chn + 1);
         client.publish(topic, "0", true, 0);
 
         if (shutter_status[chn] == 0)
@@ -118,7 +138,7 @@ void messageReceived(String &topic, String &payload)
         {
             uint8_t pos = 0;
             if (io_expander_address >= 0x20 && io_expander_address <= 0x27)
-                pos = chn_to_mcp[timed_chn[chn] - 1];
+                pos = chn_to_expander[timed_chn[chn] - 1];
             else
                 pos = timed_chn[chn] - 1;
 
@@ -208,7 +228,7 @@ void mqtt_heartbeat()
 
     serializeJson(doc, mqtt_tx);
     doc.clear();
-    sprintf(topic, "%s/%s/%s/%s", LOC, TIP, NAME, STAT);
+    sprintf(topic, "%s%s%s%s/%s", LOC, TIP, NAME, XTRA, STAT);
     client.publish(topic, mqtt_tx, true, 0);
 
     doc["free heap"] = ESP.getFreeHeap();
@@ -223,7 +243,7 @@ void mqtt_heartbeat()
 
     serializeJson(doc, mqtt_tx);
     doc.clear();
-    sprintf(topic, "%s/%s/%s/%s/1", LOC, TIP, NAME, STAT);
+    sprintf(topic, "%s%s%s%s/%s/1", LOC, TIP, NAME, XTRA, STAT);
     client.publish(topic, mqtt_tx, true, 0);
 
     doc["CPU freq"] = ESP.getCpuFreqMHz();
@@ -235,7 +255,7 @@ void mqtt_heartbeat()
 
     serializeJson(doc, mqtt_tx);
     doc.clear();
-    sprintf(topic, "%s/%s/%s/%s/2", LOC, TIP, NAME, STAT);
+    sprintf(topic, "%s%s%s%s/%s/2", LOC, TIP, NAME, XTRA, STAT);
     client.publish(topic, mqtt_tx, true, 0);
 }
 

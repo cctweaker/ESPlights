@@ -83,6 +83,8 @@ bool fs_load_device()
         strlcpy(TIP, doc["TIP"], sizeof(TIP));
     if (doc.containsKey("NAME"))
         strlcpy(NAME, doc["NAME"], sizeof(NAME));
+    if (doc.containsKey("XTRA"))
+        strlcpy(XTRA, doc["XTRA"], sizeof(XTRA));
 
     if (doc.containsKey("update_url"))
         strlcpy(update_url, doc["update_url"], sizeof(update_url));
@@ -188,10 +190,6 @@ bool fs_load_lights()
 
     uint8_t i = 0;
 
-    if (doc.containsKey("chn_to_mcp"))
-        for (i = 0; i < 16; i++)
-            chn_to_mcp[i] = doc["chn_to_mcp"][i];
-
     if (doc.containsKey("lights"))
         lights = doc["lights"];
     if (doc.containsKey("light_chn"))
@@ -224,6 +222,50 @@ bool fs_load_lights()
     if (doc.containsKey("timed_timing"))
         for (i = 0; i < timed; i++)
             timed_timing[i] = doc["timed_timing"][i];
+
+    doc.clear();
+
+    LittleFS.end();
+
+    return true;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+// ##          ######## ##     ## ########     ###    ##    ## ########  ######## ########
+// ##          ##        ##   ##  ##     ##   ## ##   ###   ## ##     ## ##       ##     ##
+// ##          ##         ## ##   ##     ##  ##   ##  ####  ## ##     ## ##       ##     ##
+// ##          ######      ###    ########  ##     ## ## ## ## ##     ## ######   ########
+// ##          ##         ## ##   ##        ######### ##  #### ##     ## ##       ##   ##
+// ##          ##        ##   ##  ##        ##     ## ##   ### ##     ## ##       ##    ##
+// ########    ######## ##     ## ##        ##     ## ##    ## ########  ######## ##     ##
+
+bool fs_load_expander()
+{
+    if (!LittleFS.begin())
+        return false;
+
+    // open config file for reading
+    File configFile = LittleFS.open(expander_cfg_file, "r");
+    if (!configFile)
+        return false;
+
+    DynamicJsonDocument doc(512);
+
+    // Read content from config file.
+    deserializeJson(doc, configFile);
+    configFile.close();
+    LittleFS.end();
+
+    uint8_t i = 0;
+
+    if (doc.containsKey("chn_to_expander"))
+        for (i = 0; i < 16; i++)
+            chn_to_expander[i] = doc["chn_to_expander"][i];
+
+    if (doc.containsKey("is_relay"))
+        is_relay = doc["is_relay"];
 
     doc.clear();
 
@@ -297,6 +339,7 @@ const char *fs_save_device()
     doc["LOC"] = LOC;
     doc["TIP"] = TIP;
     doc["NAME"] = NAME;
+    doc["XTRA"] = XTRA;
 
     doc["heartbeat"] = heartbeat;
     doc["heartbeat_minutes"] = heartbeat_minutes;
@@ -387,7 +430,7 @@ const char *fs_save_lights()
     uint8_t i = 0;
 
     for (i = 0; i < 16; i++)
-        doc["chn_to_mcp"].add(chn_to_mcp[i]);
+        doc["chn_to_expander"].add(chn_to_expander[i]);
 
     doc["lights"] = lights;
     for (i = 0; i < lights; i++)
@@ -416,6 +459,49 @@ const char *fs_save_lights()
 
     // serialize & write config
     File configFile = LittleFS.open(lights_cfg_file, "w");
+    if (!configFile)
+        return file_write_failure;
+
+    serializeJson(doc, configFile);
+    configFile.close();
+
+    doc.clear();
+
+    LittleFS.end();
+
+    return file_write_success;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+//  ######     ######## ##     ## ########     ###    ##    ## ########  ######## ########
+// ##    ##    ##        ##   ##  ##     ##   ## ##   ###   ## ##     ## ##       ##     ##
+// ##          ##         ## ##   ##     ##  ##   ##  ####  ## ##     ## ##       ##     ##
+//  ######     ######      ###    ########  ##     ## ## ## ## ##     ## ######   ########
+//       ##    ##         ## ##   ##        ######### ##  #### ##     ## ##       ##   ##
+// ##    ##    ##        ##   ##  ##        ##     ## ##   ### ##     ## ##       ##    ##
+//  ######     ######## ##     ## ##        ##     ## ##    ## ########  ######## ##     ##
+
+const char *fs_save_expander()
+{
+
+    if (!LittleFS.begin())
+        return littlefs_failure;
+
+    DynamicJsonDocument doc(512);
+
+    uint8_t i = 0;
+
+    for (i = 0; i < 16; i++)
+        doc["chn_to_expander"].add(chn_to_expander[i]);
+
+    doc["is_relay"] = is_relay;
+
+    yield();
+
+    // serialize & write config
+    File configFile = LittleFS.open(expander_cfg_file, "w");
     if (!configFile)
         return file_write_failure;
 

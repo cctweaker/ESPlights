@@ -1,6 +1,13 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
+// ##     ## ########  ########     ###    ######## ########    ########  #### ##    ##  ######
+// ##     ## ##     ## ##     ##   ## ##      ##    ##          ##     ##  ##  ###   ## ##    ##
+// ##     ## ##     ## ##     ##  ##   ##     ##    ##          ##     ##  ##  ####  ## ##
+// ##     ## ########  ##     ## ##     ##    ##    ######      ########   ##  ## ## ##  ######
+// ##     ## ##        ##     ## #########    ##    ##          ##         ##  ##  ####       ##
+// ##     ## ##        ##     ## ##     ##    ##    ##          ##         ##  ##   ### ##    ##
+//  #######  ##        ########  ##     ##    ##    ########    ##        #### ##    ##  ######
 
 void update_pins(uint8_t pin, uint8_t value)
 {
@@ -11,7 +18,7 @@ void update_pins(uint8_t pin, uint8_t value)
 
     if (io_expander_address >= 0x20 && io_expander_address <= 0x27)
         // we have MCP23017 expander
-        pos = chn_to_mcp[pin - 1]; // position in 16bit (PORTB:PORTA MSB>LSB)
+        pos = chn_to_expander[pin - 1]; // position in 16bit (PORTB:PORTA MSB>LSB)
     else
         // we have PCA expander
         pos = pin - 1;
@@ -29,12 +36,12 @@ void update_pins(uint8_t pin, uint8_t value)
 
     char topic[128];
 
-    sprintf(topic, "%s/%s/%s/channel/%d", LOC, TIP, NAME, pin);
+    sprintf(topic, "%s%s%s%s/channel/%d", LOC, TIP, NAME, XTRA, pin);
     client.publish(topic, String(value), true, 0);
 
     if (do_save_lights)
     {
-        sprintf(topic, "%s/%s/%s/%s/saved", LOC, TIP, NAME, SUB);
+        sprintf(topic, "%s%s%s%s/%s/saved", LOC, TIP, NAME, XTRA, SUB);
         client.publish(topic, String(light_status), true, 0);
         do_save_lights = false;
     }
@@ -43,26 +50,65 @@ void update_pins(uint8_t pin, uint8_t value)
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
+// ##     ## ########  ########     ###    ######## ########    ##     ##  ######  ########
+// ##     ## ##     ## ##     ##   ## ##      ##    ##          ###   ### ##    ## ##     ##
+// ##     ## ##     ## ##     ##  ##   ##     ##    ##          #### #### ##       ##     ##
+// ##     ## ########  ##     ## ##     ##    ##    ######      ## ### ## ##       ########
+// ##     ## ##        ##     ## #########    ##    ##          ##     ## ##       ##
+// ##     ## ##        ##     ## ##     ##    ##    ##          ##     ## ##    ## ##
+//  #######  ##        ########  ##     ##    ##    ########    ##     ##  ######  ##
 
 void update_MCP()
 {
-    uint8_t portA = pins;
-    uint8_t portB = pins >> 8;
+    uint16_t pini = pins;
 
-    Wire.beginTransmission(io_expander_address);
-    Wire.write(0x12); // register address for GPIOA
-    Wire.write(portA);
-    Wire.write(portB);
-    Wire.endTransmission();
+    if (is_relay)
+        pini = ~pins;
+
+    uint8_t portA = pini;
+    uint8_t portB = pini >> 8;
+
+    if (is_relay)
+    {
+        Wire.beginTransmission(io_expander_address);
+        Wire.write(0x00);  // register address for IODIRA
+        Wire.write(portA); // IODIRA
+        Wire.write(portB); // IODIRB
+        Wire.endTransmission();
+
+        Wire.beginTransmission(io_expander_address);
+        Wire.write(0x12); // register address for GPIOA
+        Wire.write(0x00);
+        Wire.write(0x00);
+        Wire.endTransmission();
+    }
+    else
+    {
+        Wire.beginTransmission(io_expander_address);
+        Wire.write(0x12); // register address for GPIOA
+        Wire.write(portA);
+        Wire.write(portB);
+        Wire.endTransmission();
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
+// ##     ## ########  ########     ###    ######## ########    ########   ######     ###
+// ##     ## ##     ## ##     ##   ## ##      ##    ##          ##     ## ##    ##   ## ##
+// ##     ## ##     ## ##     ##  ##   ##     ##    ##          ##     ## ##        ##   ##
+// ##     ## ########  ##     ## ##     ##    ##    ######      ########  ##       ##     ##
+// ##     ## ##        ##     ## #########    ##    ##          ##        ##       #########
+// ##     ## ##        ##     ## ##     ##    ##    ##          ##        ##    ## ##     ##
+//  #######  ##        ########  ##     ##    ##    ########    ##         ######  ##     ##
 
 void update_PCA()
 {
     uint8_t pca_pins = ~pins;
+
+    if (is_relay)
+        pca_pins = pins;
 
     Wire.beginTransmission(io_expander_address);
     Wire.write(1);
@@ -73,22 +119,36 @@ void update_PCA()
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
+// #### ##    ## #### ########    ##       ####  ######   ##     ## ########  ######
+//  ##  ###   ##  ##     ##       ##        ##  ##    ##  ##     ##    ##    ##    ##
+//  ##  ####  ##  ##     ##       ##        ##  ##        ##     ##    ##    ##
+//  ##  ## ## ##  ##     ##       ##        ##  ##   #### #########    ##     ######
+//  ##  ##  ####  ##     ##       ##        ##  ##    ##  ##     ##    ##          ##
+//  ##  ##   ###  ##     ##       ##        ##  ##    ##  ##     ##    ##    ##    ##
+// #### ##    ## ####    ##       ######## ####  ######   ##     ##    ##     ######
 
 void init_lights()
 {
     uint8_t value = 0;
 
-    for (uint8_t i = 0; i < 16; i++)
+    for (uint8_t i = 0; i < max_channels; i++)
     {
         value = bitRead(light_status, i);
         if (value)
-            update_pins(i, value);
+            update_pins(i + 1, value);
     }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
+//  ######  ##     ## ########  ######  ##    ##    ######## #### ##     ## ######## ########   ######
+// ##    ## ##     ## ##       ##    ## ##   ##        ##     ##  ###   ### ##       ##     ## ##    ##
+// ##       ##     ## ##       ##       ##  ##         ##     ##  #### #### ##       ##     ## ##
+// ##       ######### ######   ##       #####          ##     ##  ## ### ## ######   ########   ######
+// ##       ##     ## ##       ##       ##  ##         ##     ##  ##     ## ##       ##   ##         ##
+// ##    ## ##     ## ##       ##    ## ##   ##        ##     ##  ##     ## ##       ##    ##  ##    ##
+//  ######  ##     ## ########  ######  ##    ##       ##    #### ##     ## ######## ##     ##  ######
 
 void check_timers()
 {
@@ -102,7 +162,7 @@ void check_timers()
             {
                 char topic[128];
 
-                sprintf(topic, "%s/%s/%s/shutter/%d", LOC, TIP, NAME, i + 1);
+                sprintf(topic, "%s%s%s%s/shutter/%d", LOC, TIP, NAME, XTRA, i + 1);
                 client.publish(topic, String(shutter_status[i]), true, 0);
 
                 update_pins(shutter_chn_up[i], 0);

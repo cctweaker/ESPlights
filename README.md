@@ -49,15 +49,16 @@ On the first powerup a WiFi access point is presented. If using the default conf
 # Usage
 - MQTT topic: <code>LOC/TIP/NAME</code> where LOC, TIP & NAME are user defined. What follows are possible suffixes and they will be added after the mqtt topic.
 - command topic: <code>/cmnd/...</code>
-    - <code>/cmnd/saved</code>: saves the current lights status
     - <code>/update</code>: perform OTA update
     - <code>/reset</code>: restart ESP device
-    
+    - <code>/all</code>: with a '0' payload will deactivate all channels. With a '1' or greater payload will activate all channels IF all channels are lights (simple and timed can coexist) and there are no shutters defined.
+        
     - <code>/cmnd/lX</code>: lights control. X is the light channel number. Payload can be 0 = off, 1 = on, 2 = toggle
     - <code>/cmnd/nX</code>: simple/normal control. X is the number. Payload can be 0 = off, 1 = on, 2 = toggle
     - <code>/cmnd/sX</code>: shutter control. X is the shutter number. Payload can be 0 = stop, 1 = up, 2 = down. Repeating UP/DOWN also stops the shutters.
     - <code>/cmnd/tX</code>: timed channel control. X is the timed channel number. Payload can be 0 = off, 1 = on, 2 = toggle.
     Light, simple, shutter and timed channel numbers are different from device channel numbers. For example if you set up 6 light channels, you can assign them to device channels 6, 8, 10, 12, 14 and 16. Shutters take up 2 device channels each (1 for up movement and 1 for down movement).
+    - <code>/cmnd/saved</code>: saves the current lights status
 
 - channel status topic: <code>/channel/X</code> where X is the device channel number. Payload will be 0 for OFF and 1 for ON. It is updated by the ESP after processing commands, statuses are sent with retain flag.
 - shutter status topic: <code>/shutter/X</code> where X is the shutter number. It holds the current shutter positions. Payload will be 0 for unknown/partly open, 1 for UP, 2 for DOWN.

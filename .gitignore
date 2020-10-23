@@ -4,5 +4,6 @@
 .vscode/
 include/
 lib/
+release/
 test/
 firmware.map

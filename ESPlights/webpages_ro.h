@@ -35,36 +35,36 @@ const char page_content_title[] PROGMEM = R"=====(
 )=====";
 
 const char page_content_not_found[] PROGMEM = R"=====(
-<br><br><h3>Page not found<br><br>Click button or wait for page reload.</h3><br><br>
+<br><br><h3>Pagina nu a fost găsită<br><br>Apasa Inapoi sau asteapta ca pagina sa se reincarce.</h3><br><br>
 )=====";
 
 const char page_content_restart[] PROGMEM = R"=====(
-<br><br><h3>Device restart<br><br>Click button or wait for page reload.</h3><br><br>
+<br><br><h3>Repornire dispozitiv<br><br>Apasa Inapoi sau asteapta ca pagina sa se reincarce.</h3><br><br>
 )=====";
 
 const char page_content_erase_settings[] PROGMEM = R"=====(
-<br><br><h3>Settings erased.<br><br>
-Current settings are still in memory, please save at least the WiFi credentials to keep connectivity before restarting the device.<br><br>
-Click button or wait for page reload.</h3><br><br>
+<br><br><h3>Configuratia a fost stearsa!<br><br>
+Configuratia actuala este inca in memorie, inainte de repornire salveaza cel putin datele WiFi pentru a pastra conectivitatea.<br><br>
+Apasa Inapoi sau asteapta ca pagina sa se reincarce.</h3><br><br>
 )=====";
 
 const char page_content_update[] PROGMEM = R"=====(
-<br><br><h3>Performing firmware update...<br><br>
-Click button or wait for page reload.</h3>
-Software updates take about 30-40 seconds.<br><br>
+<br><br><h3>Actualizare firmware...<br><br>
+Apasa Inapoi sau asteapta ca pagina sa se reincarce.</h3>
+Actualizarea dureaza aproximativ 30-40 secunde.<br><br>
 )=====";
 
 const char page_content_main_menu_button[] PROGMEM = R"=====(
-<form action="/"><input type="submit" value="Main menu"></form>
+<form action="/"><input type="submit" value="Meniu principal"></form>
 )=====";
 
 const char form_buttons[] PROGMEM = R"=====(
-<input type="submit" value="Submit"><br><br><input type="submit" name="save" value="Save config"></form>
-<br><form action="/"><input type="submit" value="Back"></form><br>
+<input type="submit" value="Aplica"><br><br><input type="submit" name="save" value="Salveaza configuratia"></form>
+<br><form action="/"><input type="submit" value="Inapoi"></form><br>
 )=====";
 
 const char save_to_config[] PROGMEM = R"=====(
-<hr>Save to config file: 
+<hr>Salvare configuratie: 
 )=====";
 
 const char html_hr[] PROGMEM = R"=====(
@@ -136,69 +136,53 @@ const char form_option_field_selected[] PROGMEM = R"=====(
 )=====";
 
 const char form_yes_no[] PROGMEM = R"=====(
-%s<br><select name="%s"><option value="1" %s>yes</option><option value="0" %s>no</option></select><br><br>
+%s<br><select name="%s"><option value="1" %s>da</option><option value="0" %s>nu</option></select><br><br>
 )=====";
 
 const char form_add_del_field[] PROGMEM = R"=====(
-<input type="submit" name="%sadd" value="Add"><input type="submit" name="%sdel" value="Remove"><br><br>
+<input type="submit" name="%sadd" value="Adauga"><input type="submit" name="%sdel" value="Scade"><br><br>
 )=====";
 
 const char form_light_field[] PROGMEM = R"=====(
-Light %d channel: <input type="text" name="light%d" value="%d" minlength="1" size="1"><br>
+Lumini canal %d: <input type="text" name="light%d" value="%d" minlength="1" size="1"><br>
 )=====";
 
 const char form_simple_field[] PROGMEM = R"=====(
-Simple %d channel: <input type="text" name="simple%d" value="%d" minlength="1" size="1"><br>
+Normale canal %d: <input type="text" name="simple%d" value="%d" minlength="1" size="1"><br>
 )=====";
 
 const char form_shutter_up_field[] PROGMEM = R"=====(
-UP channel: <input type="text" name="shup%d" value="%d" minlength="1" size="1"><br>
+canal SUS: <input type="text" name="shup%d" value="%d" minlength="1" size="1"><br>
 )=====";
 
 const char form_shutter_down_field[] PROGMEM = R"=====(
-DOWN channel: <input type="text" name="shdw%d" value="%d" minlength="1" size="1"><br>
+canal JOS: <input type="text" name="shdw%d" value="%d" minlength="1" size="1"><br>
 )=====";
 
 const char form_shutter_tmt_field[] PROGMEM = R"=====(
-Timeout: <input type="text" name="shtmt%d" value="%d" minlength="1" size="1"><br>
+temporizare: <input type="text" name="shtmt%d" value="%d" minlength="1" size="1"><br>
 )=====";
 
 const char form_timed_field[] PROGMEM = R"=====(
-Channel: <input type="text" name="timed%d" value="%d" minlength="1" size="1"><br>
+Canal: <input type="text" name="timed%d" value="%d" minlength="1" size="1"><br>
 )=====";
 
 const char form_timed_tmt_field[] PROGMEM = R"=====(
-Timeout: <input type="text" name="timedtmt%d" value="%d" minlength="1" size="1"><br>
+temporizare: <input type="text" name="timedtmt%d" value="%d" minlength="1" size="1"><br>
 )=====";
 
 const char form_timeout_select[] PROGMEM = R"=====(
 Units: <select name="%s%d">
-<option value="1" %s>millisecond(s)</option>
-<option value="1000" %s>second(s)</option>
-<option value="60000" %s>minute(s)</option>
-<option value="3600000" %s>hour(s)</option>
-<option value="86400000" %s>day(s)</option>
+<option value="1" %s>millisecunde</option>
+<option value="1000" %s>secunde</option>
+<option value="60000" %s>minute</option>
+<option value="3600000" %s>ore</option>
+<option value="86400000" %s>zile</option>
 </select><br><br>
 )=====";
 
 const char form_expander_field[] PROGMEM = R"=====(
-Channel %d to: <input type="text" name="exp%d" value="%d" minlength="1" size="1"><br>
-)=====";
-
-const char form_gmac_field[] PROGMEM = R"=====(
-<input type="text" name="gmac%d" value="%02X" minlength="1">%s
-)=====";
-
-const char form_umac_field[] PROGMEM = R"=====(
-<input type="text" name="umac%d" value="%02X" minlength="1">%s
-)=====";
-
-const char form_kok_field[] PROGMEM = R"=====(
-<input type="text" name="kok%d" value="%02X" minlength="1">
-)=====";
-
-const char form_key_field[] PROGMEM = R"=====(
-<input type="text" name="key%d" value="%02X" minlength="1">
+Canal %d catre: <input type="text" name="exp%d" value="%d" minlength="1" size="1"><br>
 )=====";
 
 const char form_end[] PROGMEM = R"=====(
@@ -210,75 +194,75 @@ const char menu_entry[] PROGMEM = R"=====(
 )=====";
 
 const char menu_entry_scan_wifi[] PROGMEM = R"=====(
-<form><input type="submit" name="scan" value="Scan WiFi"></form><br>
+<form><input type="submit" name="scan" value="Scanare WiFi"></form><br>
 )=====";
 
 const char menu_entry_reload_page[] PROGMEM = R"=====(
-<form><input type="submit" value="Reload page"></form><br>
+<form><input type="submit" value="Reincarcare pagina"></form><br>
 )=====";
 
 const char menu_entry_check_restart[] PROGMEM = R"=====(
-onSubmit="if(!confirm(\'Are you sure you wish to restart the device?\')){return false;}"
+onSubmit="if(!confirm(\'Confirmi repornirea dispozitivului?\')){return false;}"
 )=====";
 
 const char menu_entry_check_erase[] PROGMEM = R"=====(
-onSubmit="if(!confirm(\'Are you sure you wish to erase all settings?\')){return false;}"
+onSubmit="if(!confirm(\'Confirmi stergerea configurarilor?\')){return false;}"
 )=====";
 
 const char menu_entry_check_update[] PROGMEM = R"=====(
-onSubmit="if(!confirm(\'Are you sure you wish to update the firmware?\')){return false;}"
+onSubmit="if(!confirm(\'Confirmi efectuarea actualizarii de firmware?\')){return false;}"
 )=====";
 
 const char littlefs_failure[] PROGMEM = R"=====(
-LittleFS failure!
+Eroare LittleFS!
 )=====";
 
 const char file_write_failure[] PROGMEM = R"=====(
-File write failure!
+Eroare scriere fisier!
 )=====";
 
 const char file_write_success[] PROGMEM = R"=====(
-File write success.
+Scriere fisier cu succes.
 )=====";
 
 const char expander_mcp23017[] PROGMEM = R"=====(
-Using MCP23017 IO expander, 16 channels available.<br>
+Multiplicator de porturi MCP23017, 16 canale disponibile.<br>
 )=====";
 
 const char expander_pca9557[] PROGMEM = R"=====(
-Using PCA9557 IO expander, 8 channels available.<br>
+Multiplicator de porturi PCA9557, 8 canale disponibile.<br>
 )=====";
 
 const char expander_pca9536[] PROGMEM = R"=====(
-Using PCA9536 IO expander, 4 channels available.<br>
+Multiplicator de porturi PCA9536, 4 canale disponibile.<br>
 )=====";
 
 const char light_channels[] PROGMEM = R"=====(
-<b>LIGHT channels</b><br>
+<b>Canale Lumina</b><br>
 )=====";
 
 const char simple_channels[] PROGMEM = R"=====(
-<b>SIMPLE channels</b><br>
+<b>Canale Normale</b><br>
 )=====";
 
 const char shutter_channels[] PROGMEM = R"=====(
-<b>SHUTTER channels</b><br>
+<b>Canale Jaluzea</b><br>
 )=====";
 
 const char shutter_number[] PROGMEM = R"=====(
-Shutter %d<br>
+Jaluzea %d<br>
 )=====";
 
 const char timed_channels[] PROGMEM = R"=====(
-<b>TIMED channels</b><br>
+<b>Canale Temporizate</b><br>
 )=====";
 
 const char timed_number[] PROGMEM = R"=====(
-Timed %d<br>
+Temporizat %d<br>
 )=====";
 
 const char menu_entry_device[] PROGMEM = R"=====(
-Device
+Dispozitiv
 )=====";
 
 const char menu_entry_wifi[] PROGMEM = R"=====(
@@ -290,43 +274,43 @@ MQTT
 )=====";
 
 const char menu_entry_channels[] PROGMEM = R"=====(
-Channels
+Canale
 )=====";
 
 const char menu_entry_light_channels[] PROGMEM = R"=====(
-Light channels
+Canale lumini
 )=====";
 
 const char menu_entry_simple_channels[] PROGMEM = R"=====(
-Normal channels
+Canale normale
 )=====";
 
 const char menu_entry_shutter_channels[] PROGMEM = R"=====(
-Shutter channels
+Canale jaluzele
 )=====";
 
 const char menu_entry_timed_channels[] PROGMEM = R"=====(
-Timed channels
+Canale temporizate
 )=====";
 
 const char menu_entry_expander[] PROGMEM = R"=====(
-IO Expander
+Multiplicator IO
 )=====";
 
 const char menu_entry_update[] PROGMEM = R"=====(
-Update firmware
+Actualizare firmware
 )=====";
 
 const char menu_entry_erase[] PROGMEM = R"=====(
-Erase settings
+Stergere configuratie
 )=====";
 
 const char menu_entry_restart[] PROGMEM = R"=====(
-Restart
+Repornire
 )=====";
 
 const char menu_entry_sysinfo[] PROGMEM = R"=====(
-System information
+Informatii sistem
 )=====";
 
 const char txt_loc[] PROGMEM = R"=====(
@@ -338,43 +322,43 @@ TIP
 )=====";
 
 const char txt_name[] PROGMEM = R"=====(
-NAME
+NUME
 )=====";
 
 const char txt_xtra[] PROGMEM = R"=====(
-NAME suffix
+sufix NUME
 )=====";
 
 const char txt_mqtt_main_topic[] PROGMEM = R"=====(
-MQTT topic will be:<br><input type="text" disabled" value="%s%s%s%s/"><br><br>
+Topicul MQTT va fi urmatorul<br><input type="text" disabled" value="%s%s%s%s/"><br><br>
 )=====";
 
 const char txt_invert_outputs[] PROGMEM = R"=====(
-Relay outputs?
+Iesire pentru relee?
 )=====";
 
 const char txt_update_url[] PROGMEM = R"=====(
-Update URL
+URL actualizare
 )=====";
 
 const char txt_heartbeat[] PROGMEM = R"=====(
-Heartbeat
+Informatii periodice
 )=====";
 
 const char txt_heartbeat_minutes[] PROGMEM = R"=====(
-Heartbeat minutes
+Perioada (minute)
 )=====";
 
 const char txt_start_webserver[] PROGMEM = R"=====(
-Start webserver
+Pornire server web
 )=====";
 
 const char txt_ssl_supported[] PROGMEM = R"=====(
-This firmware supports SSL connections!
+Acest firmware suporta conexiuni SSL!
 )=====";
 
 const char txt_mqtt_host[] PROGMEM = R"=====(
-MQTT host/ip
+MQTT server/ip
 )=====";
 
 const char txt_mqtt_port[] PROGMEM = R"=====(
@@ -382,11 +366,11 @@ MQTT port
 )=====";
 
 const char txt_mqtt_user[] PROGMEM = R"=====(
-MQTT user
+MQTT utilizator
 )=====";
 
 const char txt_mqtt_pass[] PROGMEM = R"=====(
-MQTT password
+MQTT parola
 )=====";
 
 const char txt_mqtt_will[] PROGMEM = R"=====(
@@ -406,11 +390,11 @@ STAT subtopic
 )=====";
 
 const char txt_mqtt_start[] PROGMEM = R"=====(
-Start MQTT<br>(needs WiFi enabled)
+Pornire MQTT<br>(necesita WiFi)
 )=====";
 
 const char txt_chn_to_expander[] PROGMEM = R"=====(
-<b>Channel number to<br>expander physical pin</b><br><br>
+<b>Numar canal catre<br>pini fizici multiplicator</b><br><br>
 )=====";
 
 const char txt_fw_name[] PROGMEM = R"=====(
@@ -486,5 +470,5 @@ const char txt_real_flash_size[] PROGMEM = R"=====(
 )=====";
 
 const char back_button[] PROGMEM = R"=====(
-<br><br><form action='/'><input type='submit' value='Back'></form>
+<br><br><form action='/'><input type='submit' value='Inapoi'></form>
 )=====";
