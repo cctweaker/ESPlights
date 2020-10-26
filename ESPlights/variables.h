@@ -41,12 +41,14 @@ bool use_lights = false;
 
 bool start_wifi = false;
 bool start_mqtt = false;
-bool start_webserver = false;
+bool start_webserver = true;
 
 bool do_ota_update = false;
 bool do_save_lights = false;
 bool do_init_lights = false;
 bool pin_states_known = false;
+
+bool is_relay = false;
 ///////////////////////////////////////////////////////////////////////
 
 //
@@ -61,20 +63,18 @@ const char LANG[] = "_RO";
 #else
 const char LANG[] = "";
 #endif
-// #else
-
 #endif
+
 char update_url[128] = "esp.3dstar.ro/";
 
-char LOC[32] = "home";
-char TIP[32] = "lights";
-char NAME[32] = "lights_ctrl";
+char LOC[32] = "home/";
+char TIP[32] = "lights/";
+char NAME[32] = "ESPlights";
 char XTRA[32] = "";
 
 bool heartbeat = false;
 uint8_t heartbeat_minutes = 60;
 unsigned long last_heartbeat = 0;
-bool is_relay = false;
 ///////////////////////////////////////////////////////////////////////
 
 //

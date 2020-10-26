@@ -14,13 +14,14 @@ void page_main()
     if (!chunked_response(200))
         return;
 
-    server.sendContent_P(page_header_start);
-    server.sendContent_P(page_header_end);
-
     char buffer[256];
 
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
+    server.sendContent_P(page_header_end);
     sprintf_P(buffer, page_content_title, NAME);
     server.sendContent(buffer);
+
     sprintf_P(buffer, menu_entry, "/device", menu_entry_device, "");
     server.sendContent(buffer);
     sprintf_P(buffer, menu_entry, "/wifi", menu_entry_wifi, "");
@@ -97,13 +98,13 @@ void cfg_page_device()
     if (!chunked_response(200))
         return;
 
-    server.sendContent_P(page_header_start);
-    server.sendContent_P(page_header_end);
-
     char buffer[256];
 
-    server.sendContent_P(form_start);
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
+    server.sendContent_P(page_header_end);
 
+    server.sendContent_P(form_start);
     sprintf_P(buffer, form_text_field_string_min, txt_loc, "LOC", LOC);
     server.sendContent(buffer);
     sprintf_P(buffer, form_text_field_string_min, txt_tip, "TIP", TIP);
@@ -172,7 +173,10 @@ void cfg_page_wifi()
     if (!chunked_response(200))
         return;
 
-    server.sendContent_P(page_header_start);
+    char buffer[256];
+
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
     server.sendContent_P(page_header_end);
 
     int i = 0;
@@ -192,8 +196,6 @@ void cfg_page_wifi()
 
     server.sendContent_P(menu_entry_scan_wifi);
     server.sendContent_P(html_hr);
-
-    char buffer[256];
 
     server.sendContent_P(form_start);
 
@@ -270,10 +272,11 @@ void cfg_page_mqtt()
     if (!chunked_response(200))
         return;
 
-    server.sendContent_P(page_header_start);
-    server.sendContent_P(page_header_end);
-
     char buffer[256];
+
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
+    server.sendContent_P(page_header_end);
 
 #ifdef USE_SSL
     server.sendContent_P(txt_ssl_supported);
@@ -407,10 +410,11 @@ void cfg_page_channels()
     if (!chunked_response(200))
         return;
 
-    server.sendContent_P(page_header_start);
-    server.sendContent_P(page_header_end);
-
     char buffer[256];
+
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
+    server.sendContent_P(page_header_end);
 
     server.sendContent_P(form_start);
 
@@ -611,10 +615,11 @@ void cfg_page_channels_light()
     if (!chunked_response(200))
         return;
 
-    server.sendContent_P(page_header_start);
-    server.sendContent_P(page_header_end);
-
     char buffer[256];
+
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
+    server.sendContent_P(page_header_end);
 
     server.sendContent_P(form_start);
 
@@ -695,10 +700,11 @@ void cfg_page_channels_simple()
     if (!chunked_response(200))
         return;
 
-    server.sendContent_P(page_header_start);
-    server.sendContent_P(page_header_end);
-
     char buffer[256];
+
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
+    server.sendContent_P(page_header_end);
 
     server.sendContent_P(form_start);
 
@@ -788,10 +794,11 @@ void cfg_page_channels_shutter()
     if (!chunked_response(200))
         return;
 
-    server.sendContent_P(page_header_start);
-    server.sendContent_P(page_header_end);
-
     char buffer[256];
+
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
+    server.sendContent_P(page_header_end);
 
     server.sendContent_P(form_start);
 
@@ -918,10 +925,11 @@ void cfg_page_channels_timed()
     if (!chunked_response(200))
         return;
 
-    server.sendContent_P(page_header_start);
-    server.sendContent_P(page_header_end);
-
     char buffer[256];
+
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
+    server.sendContent_P(page_header_end);
 
     server.sendContent_P(form_start);
 
@@ -1035,10 +1043,11 @@ void cfg_page_expander()
     if (!chunked_response(200))
         return;
 
-    server.sendContent_P(page_header_start);
-    server.sendContent_P(page_header_end);
-
     char buffer[256];
+
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
+    server.sendContent_P(page_header_end);
 
     server.sendContent_P(form_start);
 
@@ -1099,8 +1108,10 @@ void cfg_page_sysinfo()
 
     char buffer[256] = {0};
 
-    server.sendContent_P(page_header_start);
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
     server.sendContent_P(page_header_end);
+
     server.sendContent_P(html_table_i);
 
     ////////////////////////
@@ -1212,13 +1223,14 @@ void page_restart()
     if (!chunked_response(200))
         return;
 
-    server.sendContent_P(page_header_start);
+    char buffer[256];
 
-    char buffer[256] = {0};
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
     sprintf_P(buffer, page_header_refresh, 10);
     server.sendContent(buffer);
-
     server.sendContent_P(page_header_end);
+
     sprintf_P(buffer, page_content_title, NAME);
     server.sendContent(buffer);
     server.sendContent_P(page_content_restart);
@@ -1247,13 +1259,14 @@ void page_format()
     if (!chunked_response(200))
         return;
 
-    server.sendContent_P(page_header_start);
+    char buffer[256];
 
-    char buffer[256] = {0};
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
     sprintf_P(buffer, page_header_refresh, 15);
     server.sendContent(buffer);
-
     server.sendContent_P(page_header_end);
+
     sprintf_P(buffer, page_content_title, NAME);
     server.sendContent(buffer);
     server.sendContent_P(page_content_erase_settings);
@@ -1305,11 +1318,14 @@ void page_update()
     if (!chunked_response(200))
         return;
 
-    server.sendContent_P(page_header_start);
-    char buffer[256] = {0};
+    char buffer[256];
+
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
     sprintf_P(buffer, page_header_refresh, 40);
     server.sendContent(buffer);
     server.sendContent_P(page_header_end);
+
     sprintf_P(buffer, page_content_title, NAME);
     server.sendContent(buffer);
     server.sendContent_P(page_content_update);
@@ -1337,13 +1353,15 @@ void page_not_found()
 {
     if (!chunked_response(404))
         return;
-    server.sendContent_P(page_header_start);
 
-    char buffer[256] = {0};
+    char buffer[256];
+
+    sprintf_P(buffer, page_header_start, FW_NAME);
+    server.sendContent(buffer);
     sprintf_P(buffer, page_header_refresh, 10);
     server.sendContent(buffer);
-
     server.sendContent_P(page_header_end);
+    
     sprintf_P(buffer, page_content_title, NAME);
     server.sendContent(buffer);
     server.sendContent_P(page_content_not_found);

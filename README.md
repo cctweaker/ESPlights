@@ -28,6 +28,15 @@ If all channels are used equally, this corresponds to about 137W per channel, en
 The controller should cover most houses and apartments without problems, leaving a few extra channels for shutters/blinds, doors/gates, irrigation or other controls.
 The number of boards you can use is unlimited so you can controll all your mains powered small devices.
 
+# Box
+In the hardware folder are STL files for printing a DIN rail box.
+Print:
+- 1 x box.stl
+- 1 x cover.stl (EN & RO versions)
+- 3 x DIN mount.stl
+The holes are for 2x10 mm wood screws. 6 are needed for the DIN rail mounts, 4 for the PCB and 4 for the cover.
+ABS is recommended as printing material. Check your local regulations.
+
 
 # Build & upload
 - there are 2 methods:
