@@ -353,6 +353,10 @@ const char txt_start_webserver[] PROGMEM = R"=====(
 Pornire server web
 )=====";
 
+const char txt_start_espnow[] PROGMEM = R"=====(
+Pornire punte ESP-Now
+)=====";
+
 const char txt_ssl_supported[] PROGMEM = R"=====(
 Acest firmware suporta conexiuni SSL!
 )=====";

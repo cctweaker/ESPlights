@@ -76,13 +76,14 @@ void initVariant()
 
 void setup()
 {
-  load_config();    // load configuration from SPIFFS
-  init_expander();  // initialize expander
-  init_wifi();      // initialize WiFi
-  init_softap();    // initialize SoftAP if WiFi not configured
-  init_dns();       // initialize DNS for captive portal
-  init_mqtt();      // initialize MQTT
-  init_webserver(); // initialize Webserver
+  load_config();        // load configuration from SPIFFS
+  init_expander();      // initialize expander
+  init_wifi();          // initialize WiFi
+  init_softap();        // initialize SoftAP if WiFi not configured
+  init_dns();           // initialize DNS for captive portal
+  init_mqtt();          // initialize MQTT
+  init_webserver();     // initialize Webserver
+  init_espnow_bridge(); // initialize ESP-Now bridge
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -115,6 +116,9 @@ void loop()
 
   if (use_mqtt)
     mqtt_loop();
+
+  if (use_esp_now_bridge)
+    enb_loop();
 
   if (do_ota_update)
     ota_update();

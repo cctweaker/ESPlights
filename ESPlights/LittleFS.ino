@@ -97,6 +97,9 @@ bool fs_load_device()
     if (doc.containsKey("start_webserver"))
         start_webserver = doc["start_webserver"];
 
+    if (doc.containsKey("start_esp_now_bridge"))
+        start_esp_now_bridge = doc["start_esp_now_bridge"];
+
     doc.clear();
 
     LittleFS.end();
@@ -345,6 +348,8 @@ const char *fs_save_device()
     doc["heartbeat_minutes"] = heartbeat_minutes;
 
     doc["start_webserver"] = start_webserver;
+
+    doc["start_esp_now_bridge"] = start_esp_now_bridge;
 
     yield();
 

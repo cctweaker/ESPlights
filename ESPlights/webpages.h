@@ -369,6 +369,10 @@ const char txt_start_webserver[] PROGMEM = R"=====(
 Start webserver
 )=====";
 
+const char txt_start_espnow[] PROGMEM = R"=====(
+Start ESP-Now bridge
+)=====";
+
 const char txt_ssl_supported[] PROGMEM = R"=====(
 This firmware supports SSL connections!
 )=====";

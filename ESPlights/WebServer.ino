@@ -91,6 +91,9 @@ void cfg_page_device()
     if (server.hasArg("start_webserver"))
         start_webserver = server.arg("start_webserver").toInt();
 
+    if (server.hasArg("start_esp_now_bridge"))
+        start_esp_now_bridge = server.arg("start_esp_now_bridge").toInt();
+
     ///////////
     yield();
     ///////////
@@ -122,6 +125,8 @@ void cfg_page_device()
     sprintf_P(buffer, form_text_field_int_min, txt_heartbeat_minutes, "heartbeat_minutes", heartbeat_minutes);
     server.sendContent(buffer);
     sprintf_P(buffer, form_yes_no, txt_start_webserver, "start_webserver", start_webserver ? "selected" : "", start_webserver ? "" : "selected");
+    server.sendContent(buffer);
+    sprintf_P(buffer, form_yes_no, txt_start_espnow, "start_esp_now_bridge", start_esp_now_bridge ? "selected" : "", start_esp_now_bridge ? "" : "selected");
     server.sendContent(buffer);
 
     server.sendContent_P(html_hr);
@@ -1361,7 +1366,7 @@ void page_not_found()
     sprintf_P(buffer, page_header_refresh, 10);
     server.sendContent(buffer);
     server.sendContent_P(page_header_end);
-    
+
     sprintf_P(buffer, page_content_title, NAME);
     server.sendContent(buffer);
     server.sendContent_P(page_content_not_found);

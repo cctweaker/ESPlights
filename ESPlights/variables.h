@@ -38,10 +38,12 @@ bool use_dns = false;
 bool use_mqtt = false;
 bool use_webserver = false;
 bool use_lights = false;
+bool use_esp_now_bridge = false;
 
 bool start_wifi = false;
 bool start_mqtt = false;
 bool start_webserver = true;
+bool start_esp_now_bridge = false;
 
 bool do_ota_update = false;
 bool do_save_lights = false;
@@ -108,6 +110,19 @@ char WILL[32] = "will";
 char PUB[32] = "";
 char SUB[32] = "cmnd";
 char STAT[32] = "stat";
+///////////////////////////////////////////////////////////////////////
+
+//
+
+///////////////////////////////////////////////////////////////////////
+// ESP-Now bridge
+///////////////////////////////////////////////////////////////////////
+uint8_t enb_accolade = 0;            // number of opened accolades
+uint8_t enb_position = 0;            // position in rx buffer
+char enb_buffer[256];                // rx buffer for relaying
+unsigned int enb_accolade_start = 0; // time last message started
+bool enb_during_message = false;     // flag that we are in the middle of a message
+#define enb_max_time 2 * 1000        // max 2 seconds to finish message
 ///////////////////////////////////////////////////////////////////////
 
 //
