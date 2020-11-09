@@ -197,7 +197,6 @@ void init_webserver()
     server.on("/wifi", cfg_page_wifi);
     server.on("/mqtt", cfg_page_mqtt);
 
-    server.on("/channels", cfg_page_channels);
     server.on("/light_channels", cfg_page_channels_light);
     server.on("/simple_channels", cfg_page_channels_simple);
     server.on("/shutter_channels", cfg_page_channels_shutter);

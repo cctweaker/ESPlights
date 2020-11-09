@@ -132,17 +132,17 @@ bool enb_during_message = false;     // flag that we are in the middle of a mess
 ///////////////////////////////////////////////////////////////////////
 // mapping channels numbers on device to MCP23017 IO ports
 uint8_t chn_to_expander[16] = {15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}; // 3DStar 16 channel controller
-// uint8_t chn_to_expander[16] = {8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15, 0}; // Sainsmart relay board
-// uint8_t chn_to_expander[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8}; // PCA9557 8 channel version
-// uint8_t chn_to_expander[16] = {0, 1, 2, 3, 4}; // PCA9536 4 channel version
+// uint8_t chn_to_expander[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8};                            // PCA9557 8 channel version
+// uint8_t chn_to_expander[16] = {0, 1, 2, 3, 4};                                        // PCA9536 4 channel version
+// uint8_t chn_to_expander[16] = {8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15, 0}; // Sainsmart 16 channel relay board
 
 // LIGHTS
-uint8_t lights = 4;                                                              // number of light channels
+uint8_t lights = 16;                                                             // number of light channels
 uint16_t light_status = 0;                                                       // holds light channels status, 1 bit per channel
 uint8_t light_chn[16] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}; // main channel number assigned per lights channel number
 
 // SIMPLE
-uint8_t simple = 2;                                                               // number of simple channels (no status save, no timeout)
+uint8_t simple = 0;                                                               // number of simple channels (no status save, no timeout)
 uint8_t simple_chn[16] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}; // main channel number assigned per simple channel number
 
 // channels activated by lights or simple command
@@ -150,18 +150,18 @@ uint8_t simple_chn[16] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}
 uint16_t untimed_status = 0;
 
 // SHUTTERS
-uint8_t shutters = 2;                                       // number of shutters (each one uses 2 channels, max possible are 8)
-uint8_t shutter_status[8] = {0, 0};                         // status per shutter
-uint8_t shutter_chn_up[8] = {1, 3, 5, 7, 9, 11, 13, 15};    // main channel number assigned per up command channel per shutter
-uint8_t shutter_chn_down[8] = {2, 4, 6, 8, 10, 12, 14, 16}; // main channel number assigned per down command channel per shutter
-uint16_t shutter_timing[8] = {30000, 30000};                // timeout in seconds per shutter channel (to kill power), max 65535 seconds
-unsigned long shutter_timeout[8] = {0, 0};                  // holds millis when activated, per shutter
+uint8_t shutters = 0;                                                                  // number of shutters (each one uses 2 channels, max possible are 8)
+uint8_t shutter_status[8] = {0, 0, 0, 0, 0, 0, 0, 0};                                  // status per shutter
+uint8_t shutter_chn_up[8] = {1, 3, 5, 7, 9, 11, 13, 15};                               // main channel number assigned per up command channel per shutter
+uint8_t shutter_chn_down[8] = {2, 4, 6, 8, 10, 12, 14, 16};                            // main channel number assigned per down command channel per shutter
+uint16_t shutter_timing[8] = {30000, 30000, 30000, 30000, 30000, 30000, 30000, 30000}; // timeout in seconds per shutter channel (to kill power), max 65535 seconds
+unsigned long shutter_timeout[8] = {0, 0, 0, 0, 0, 0, 0, 0};                           // holds millis when activated, per shutter
 
 // TIMED
-uint8_t timed = 2;                                                                                                                  // number timed channels (max 16, timeout in milliseconds)
-uint8_t timed_chn[16] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};                                                    // main channel number assigned per timed channel number
-unsigned long timed_timing[16] = {5000, 10000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000}; // timeout in milliseconds per timed channel
-unsigned long timed_timeout[16] = {0, 0};                                                                                           // holds millis value when activated, per timed channel
+uint8_t timed = 0;                                                                                                                 // number timed channels (max 16, timeout in milliseconds)
+uint8_t timed_chn[16] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};                                                   // main channel number assigned per timed channel number
+unsigned long timed_timing[16] = {5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000}; // timeout in milliseconds per timed channel
+unsigned long timed_timeout[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};                                                // holds millis value when activated, per timed channel
 ///////////////////////////////////////////////////////////////////////
 
 //
