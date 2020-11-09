@@ -133,7 +133,8 @@ bool enb_during_message = false;     // flag that we are in the middle of a mess
 // mapping channels numbers on device to MCP23017 IO ports
 uint8_t chn_to_expander[16] = {15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}; // 3DStar 16 channel controller
 // uint8_t chn_to_expander[16] = {8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15, 0}; // Sainsmart relay board
-//
+// uint8_t chn_to_expander[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8}; // PCA9557 8 channel version
+// uint8_t chn_to_expander[16] = {0, 1, 2, 3, 4}; // PCA9536 4 channel version
 
 // LIGHTS
 uint8_t lights = 4;                                                              // number of light channels

@@ -300,9 +300,6 @@ void mqtt_heartbeat()
 
     DynamicJsonDocument doc(256);
 
-    doc["l"] = LOC;
-    doc["t"] = TIP;
-    doc["n"] = NAME;
 #ifndef USE_SSL
     doc["fw"] = FW_NAME;
 #else
