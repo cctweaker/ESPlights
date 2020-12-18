@@ -16,6 +16,6 @@ def copycompress(source, target, env):
     ORG_FIRMWARE_SIZE = os.stat(SOURCE_FILE).st_size
     GZ_FIRMWARE_SIZE = os.stat(GZIP_FILE).st_size
 
-    print("Compression reduced firmware size by {:.0f}% (was {} bytes, now {} bytes)".format((GZ_FIRMWARE_SIZE / ORG_FIRMWARE_SIZE) * 100, ORG_FIRMWARE_SIZE, GZ_FIRMWARE_SIZE))
+    print("Compression reduced firmware size by {:.0f}% (was {} bytes, now {} bytes)".format(100 - (GZ_FIRMWARE_SIZE / ORG_FIRMWARE_SIZE) * 100, ORG_FIRMWARE_SIZE, GZ_FIRMWARE_SIZE))
 
 env.AddPostAction("buildprog",copycompress)
