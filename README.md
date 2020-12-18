@@ -53,11 +53,14 @@ On the first powerup a WiFi access point is presented. If using the default conf
 - [Device] menu will allow you to change LOC, TIP, NAME variables (these make up the MQTT topic), update URL (if you want to set up your own server for updates), MQTT heartbeat on/off and period and if the webserver should be started.
 - [WIFI] menu will let you scan for WiFi networks and set up credentials for both networks. The second one is recommended to be set to your phone's hotspot in case you change the main Wifi network credentials.
 - [MQTT] menu is used to set up your MQTT connection
-- [Channels] menu will let you configure the devices channels. You can assign channels to lights, simple channels, shutter and timed channels. You can set up all the timeouts on shutter and timed channels.
-- [Update firmware] menu is self explanatory
-- [Erase settings] menu will delete all configurations but will not restart the device. Menus will still show the current settings from active memory.
-- [Restart] menu reboots the device
-- [System information] menu will show some infos about the device.
+- [Light channels] - menu to configure the channels used for lights. Their status is saved and retreived on startup from the MQTT broker.
+- [Normal channels] - same as light channels but their status is not saved.
+- [Shutter channels] - if you want to control shutters, here you can define them. Two device channels are needed for each shutter channel. Timeout is needed to kill power after a certain time but also to indicate the end of travel. If timeout is reached the shutter channel will indicate the last direction. If timeout is not reached the shutter channel will indicate a <code>0</code> value.
+- [Timed channels] - these channels will have a timeout assiged to them after activation. Good for lights under motion sensor control but also manual control. Each channel has its own timer ranging from 1ms to a few days. Because of this large selection these channels can also be used for door access control, gate opening, bathroom ventilators, etc. A light or normal command on these channels will stop the timer and give control to light or normal channel.
+- [Update firmware] - self explanatory, you can use your own server (defined under Device menu) or the official release channel as defined in the firmware.
+- [Erase settings] menu will delete all configuration files stored on the ESP but will not restart the device. Menus will still show the current settings from active memory. Use this trick to save at least the Wifi settings then restart. If you restart without saving WiFi credentials then it will behave like a new device.
+- [Restart] - reboots the device
+- [System information] - shows some infos about the device
 
 # Usage
 - MQTT topic: <code>LOC/TIP/NAME</code> where LOC, TIP & NAME are user defined. What follows are possible suffixes and they will be added after the mqtt topic.
@@ -74,8 +77,8 @@ On the first powerup a WiFi access point is presented. If using the default conf
     - <code>/cmnd/saved</code>: saves the current lights status
 
 - channel status topic: <code>/channel/X</code> where X is the device channel number. Payload will be 0 for OFF and 1 for ON. It is updated by the ESP after processing commands, statuses are sent with retain flag.
-- shutter status topic: <code>/shutter/X</code> where X is the shutter number. It holds the current shutter positions. Payload will be 0 for unknown/partly open, 1 for UP, 2 for DOWN.
-- ESP bridge topic: <code>/espnow</code> will be used to relay the received ESP-Now messages. Messages need to be in JSON format.
+- shutter status topic: <code>/shutter/X</code> where X is the shutter number. It holds the current shutter positions. Payload will be 0 for unknown/partly open, 1 for DOWN, 2 for UP.
+- ESP bridge topic: <code>/espnow</code> will be used to relay the received ESP-Now messages. Messages must be in JSON format as the software looks for opening and closing brackets to relay a full message.
 
 - status topic: <code>/stat</code> where the ESP sends periodic updates (heartbeats) with useful information.
 - will topic: <code>/will</code> Payload is 1 when device is ON and 0 when powered OFF
