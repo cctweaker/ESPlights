@@ -216,31 +216,29 @@ void messageReceived(String &topic, String &payload)
 
         if (value == 0)
         {
+            bitWrite(light_status, timed_chn[chn] - 1, 0);
             timed_timeout[chn] = 0;
             update_pins(timed_chn[chn], 0);
         }
         else if (value == 1)
         {
+            bitWrite(light_status, timed_chn[chn] - 1, 1);
             timed_timeout[chn] = millis();
             update_pins(timed_chn[chn], 1);
         }
         else
         {
-            uint8_t pos = 0;
-            if (io_expander_address >= 0x20 && io_expander_address <= 0x27)
-                pos = chn_to_expander[timed_chn[chn] - 1];
-            else
-                pos = timed_chn[chn] - 1;
-
-            uint8_t prev = bitRead(pins, pos);
+            uint8_t prev = bitRead(light_status, timed_chn[chn] - 1);
 
             if (prev == 1)
             {
+                bitWrite(light_status, timed_chn[chn] - 1, 0);
                 timed_timeout[chn] = 0;
                 update_pins(timed_chn[chn], 0);
             }
             else
             {
+                bitWrite(light_status, timed_chn[chn] - 1, 1);
                 timed_timeout[chn] = millis();
                 update_pins(timed_chn[chn], 1);
             }

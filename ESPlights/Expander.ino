@@ -197,6 +197,16 @@ void update_pins(uint8_t pin, uint8_t value)
         client.publish(topic, String(light_status), true, 0);
         do_save_lights = false;
     }
+
+    //DEBUG
+    // sprintf(topic, "%s%s%s%s/%s/untimed_status", LOC, TIP, NAME, XTRA, SUB);
+    // client.publish(topic, String(untimed_status), false, 0);
+
+    // sprintf(topic, "%s%s%s%s/%s/light_status", LOC, TIP, NAME, XTRA, SUB);
+    // client.publish(topic, String(light_status), false, 0);
+
+    // sprintf(topic, "%s%s%s%s/%s/pins", LOC, TIP, NAME, XTRA, SUB);
+    // client.publish(topic, String(pins), false, 0);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
